@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+    rabbitmq:
+        image: rabbitmq:latest
+        networks:
+            default:
+                aliases:
+                    - rabbitmq_host
+    producer:
+        build: .
+        volumes:
+            - ./producer:/usr/src/app
+        tty: true
+        stdin_open: true
+    consumer:
+        build: .
+        volumes:
+            - ./consumer:/usr/src/app
+        tty: true
+        stdin_open: true
