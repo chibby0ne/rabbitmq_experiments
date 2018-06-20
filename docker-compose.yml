@@ -2,6 +2,7 @@ version: '3'
 
 services:
     rabbitmq:
+        hostname: rabbitmq_host
         image: rabbitmq:latest
         networks:
             default:
@@ -9,13 +10,17 @@ services:
                     - rabbitmq_host
     producer:
         build: .
+        command: ["python", "producer.py"]
         volumes:
             - ./producer:/usr/src/app
-        tty: true
-        stdin_open: true
+            - ./common:/usr/src/common
+        # tty: true
+        # stdin_open: true
     consumer:
         build: .
+        command: ["python", "consumer.py"]
         volumes:
             - ./consumer:/usr/src/app
-        tty: true
-        stdin_open: true
+            - ./common:/usr/src/common
+        # tty: true
+        # stdin_open: true

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from kombus import Connection, Producer, Exchange, Queue
+from kombu import Connection, Producer, Exchange, Queue
 
 
 def main():
