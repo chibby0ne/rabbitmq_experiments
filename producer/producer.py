@@ -2,27 +2,38 @@
 # -*- coding: utf-8 -*-
 
 from kombu import Connection, Producer, Exchange, Queue
+import time
+import logging
+
+rabbitmq_url = 'amqp://rabbitmq_host:5672'
+sending_period = 3
+logger = logging.getLogger('producer')
+logger.setLevel(logging.INFO)
+ch = logging.StreamHandler()
+ch.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s - %(name)s' + ' - %(levelname)s ' +
+                              '- ' + '%(message)s')
+ch.setFormatter(formatter)
+logger.addHandler(ch)
 
 
 def main():
     """Main program function"""
-    with Connection('amqp://rabbitmq_host:5672') as conn:
-        with conn.channel() as channel:
-            producer = Producer(channel)
-            exchange = Exchange(
+    with Connection(rabbitmq_url) as conn:
+        producer = Producer(conn)
+        exchange = Exchange(
                     name='producer_consumer_exchange',
-                    type='fanout',
-                    channel=channel)
-
-            queue = Queue(
-                    name='only_queue',
-                    exchange=exchange,
-                    routing_key='producer_key')
-
+                    type='fanout')
+        queue = Queue(
+                name='only_queue',
+                exchange=exchange,
+                routing_key='producer_key')
+        while True:
+            logger.info('Sent a message: {}'.format('hello world'))
             producer.publish(
                     body={'hello': 'world'},
-                    retry=True,
                     exchange=queue.exchange)
+            time.sleep(sending_period)
 
 
 if __name__ == "__main__":
