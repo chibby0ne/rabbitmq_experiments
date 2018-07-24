@@ -12,7 +12,7 @@ logger.setLevel(logging.INFO)
 ch = logging.StreamHandler()
 ch.setLevel(logging.INFO)
 formatter = logging.Formatter('%(asctime)s - %(name)s' + ' - %(levelname)s ' +
-                              '- ' + '%(message)s')
+                              '- %(message)s')
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
@@ -22,8 +22,8 @@ def main():
     with Connection(rabbitmq_url) as conn:
         producer = Producer(conn)
         exchange = Exchange(
-                    name='producer_consumer_exchange',
-                    type='fanout')
+                name='producer_consumer_exchange',
+                type='direct')
         queue = Queue(
                 name='only_queue',
                 exchange=exchange,
@@ -32,7 +32,9 @@ def main():
             logger.info('Sent a message: {}'.format('hello world'))
             producer.publish(
                     body={'hello': 'world'},
-                    exchange=queue.exchange)
+                    routing_key='producer_key',
+                    exchange=queue.exchange
+                    )
             time.sleep(sending_period)
 
 

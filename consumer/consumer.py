@@ -10,7 +10,7 @@ rabbitmq_url = 'amqp://rabbitmq_host:5672'
 
 class Consumer(ConsumerMixin):
     def __init__(self, connection, queues):
-        """docstring for Consumer"""
+        """ Consumer """
         self.connection = connection
         self.queues = queues
 
@@ -34,7 +34,7 @@ class Consumer(ConsumerMixin):
 
 exchange = Exchange(
         name='producer_consumer_exchange',
-        type='fanout')
+        type='direct')
 
 queues = [Queue(
     name='only_queue',
