@@ -1,2 +1,2 @@
+A repo where you can perform rabbitmq experiments using Docker containers
 
-A repo where to play and perform rabbitmq expeirments using Docker containers
