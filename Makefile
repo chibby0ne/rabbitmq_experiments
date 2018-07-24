@@ -1,14 +1,14 @@
-all: build up
+all: build down up
 
 build:
 	docker-compose build
 	@echo  === Docker containers sucessfully built ===
 
-start: up
+start: build down up
 
-run: up
+run: down up
 
-up:
+up: down
 	docker-compose up
 	@echo  === Docker containers up and running ===
 
