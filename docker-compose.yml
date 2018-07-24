@@ -14,13 +14,9 @@ services:
         volumes:
             - ./producer:/usr/src/app
             - ./common:/usr/src/common
-        # tty: true
-        # stdin_open: true
     consumer:
         build: .
         command: ["python", "consumer.py"]
         volumes:
             - ./consumer:/usr/src/app
             - ./common:/usr/src/common
-        # tty: true
-        # stdin_open: true
