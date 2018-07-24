@@ -33,12 +33,13 @@ class Consumer(ConsumerMixin):
 
 
 exchange = Exchange(
-                     name='producer_consumer_exchange',
-                     type='fanout')
+        name='producer_consumer_exchange',
+        type='fanout')
+
 queues = [Queue(
-                    name='only_queue',
-                    exchange=exchange,
-                    routing_key='producer_key')]
+    name='only_queue',
+    exchange=exchange,
+    routing_key='producer_key')]
 
 
 def main():
