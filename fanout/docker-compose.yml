@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+    rabbitmq:
+        hostname: rabbitmq_host
+        image: rabbitmq:latest
+        networks:
+            default:
+                aliases:
+                    - rabbitmq_host
+    producer:
+        build: .
+        command: ["python", "producer.py"]
+        volumes:
+            - ./producer:/usr/src/app
+            - ./common:/usr/src/common
+    consumer1:
+        build: .
+        command: ["python", "consumer.py", "1"]
+        volumes:
+            - ./consumer:/usr/src/app
+            - ./common:/usr/src/common
+              
+    consumer2:
+        build: .
+        command: ["python", "consumer.py", "2"]
+        volumes:
+            - ./consumer:/usr/src/app
+            - ./common:/usr/src/common
+
+    consumer3:
+        build: .
+        command: ["python", "consumer.py", "3"]
+        volumes:
+            - ./consumer:/usr/src/app
+            - ./common:/usr/src/common
