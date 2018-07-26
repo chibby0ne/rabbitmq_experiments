@@ -8,7 +8,7 @@ start: build down up
 
 run: down up
 
-up: down
+up: down build
 	docker-compose up
 	@echo  === Docker containers up and running ===
 
