@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from kombu import Connection, Producer, Exchange, Queue
+from kombu import Connection, Producer, Exchange
 import time
 import logging
 
@@ -24,16 +24,12 @@ def main():
         exchange = Exchange(
                 name='producer_consumer_exchange',
                 type='direct')
-        queue = Queue(
-                name='only_queue',
-                exchange=exchange,
-                routing_key='producer_key')
         while True:
             logger.info('Sent a message: {}'.format('hello world'))
             producer.publish(
                     body={'hello': 'world'},
                     routing_key='producer_key',
-                    exchange=queue.exchange
+                    exchange=exchange
                     )
             time.sleep(sending_period)
 

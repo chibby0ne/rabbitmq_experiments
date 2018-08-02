@@ -32,19 +32,16 @@ class Consumer(ConsumerMixin):
         message.ack()
 
 
-exchange = Exchange(
-        name='producer_consumer_exchange',
-        type='direct')
-
-queues = [Queue(
-    name='only_queue',
-    exchange=exchange,
-    routing_key='producer_key')]
-
-
 def main():
     """Main program function"""
     with Connection(rabbitmq_url, heartbeat=4) as conn:
+        exchange = Exchange(
+                name='producer_consumer_exchange',
+                type='direct')
+        queues = [Queue(
+            name='only_queue',
+            exchange=exchange,
+            routing_key='producer_key')]
         Consumer(conn, queues).run()
 
 
